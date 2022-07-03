@@ -1,0 +1,208 @@
+---------------------------
+| DBS 501 LAB 1 Submission |
+---------------------------
+			  
+
+
+
+--Question1)---------------------------------------------------------------------------------------------------------
+
+SET   SERVEROUTPUT ON
+<<big>>
+DECLARE
+      v_mine  NUMBER(4) := 500;
+BEGIN
+  	<<small>>
+  	DECLARE
+      		v_mine  NUMBER(3) := 700;
+  	BEGIN
+      		dbms_output.put_line('Local V_MINE is here: ' || v_mine);
+     		dbms_output.put_line('Outer V_MINE is here: ' || big.v_mine);     
+      		big.v_mine := v_mine * 2;
+  	END;
+      dbms_output.put_line('Outer V_MINE is here: ' || v_mine);
+END;
+/
+
+
+OUTPUT:
+Local V_MINE is here: 700
+Outer V_MINE is here: 500
+Outer V_MINE is here: 1400
+
+
+--Question 2)--------------------------------------------------------------------------------------------------------
+
+SET SERVEROUTPUT ON 
+DECLARE
+    v_subject VARCHAR2(50);
+    v_number NUMBER(8,2);
+    v_room_location CONSTANT VARCHAR2(4):='704B';
+    v_boolean BOOLEAN;
+    v_date DATE :=SYSDATE+7;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Room Location:'||' '||v_room_location);
+    DBMS_OUTPUT.PUT_LINE('Date:'||' '||v_date);
+    v_subject:='C++ advanced';
+    IF INSTR(v_subject,'SQL')>0 THEN
+        DBMS_OUTPUT.PUT_LINE('Course Name:'||' '||v_subject);
+    ELSE
+        IF INSTR(v_room_location,'704B')>0 THEN
+            IF v_subject IS NOT NULL THEN
+                DBMS_OUTPUT.PUT_LINE('Course Name:'||' '||v_subject||', '||'Room Location:'||' '||v_room_location);
+            ELSE
+                DBMS_OUTPUT.PUT_LINE('The course and room location are unknown');
+            END IF;
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('The course and location could not be determined');
+        END IF;
+    END IF;
+END;
+
+OUTPUT 1:
+Room Location: 704B
+Date: 26-MAY-20
+The course and room location are unknown
+PL/SQL procedure successfully completed.
+
+OUTPUT 2:
+Room Location: 704B
+Date: 26-MAY-20
+Course Name: C++ advanced, Room Location: 704B
+PL/SQL procedure successfully completed.
+
+--Question3)---------------------------------------------------------------------------------------------------------
+
+
+--A.	Create a table called Lab1_tab with two columns (Id as numeric and LName 
+--as variable character of maximum 20 characters)
+
+CREATE TABLE Lab1_tab(
+    Id NUMERIC,
+    Lname VARCHAR2(20)
+);
+
+
+--B.	Create a sequence called Lab1_seq that increments by units of 5 and starts with1.
+
+CREATE SEQUENCE Lab1_seq
+INCREMENT BY 5
+START WITH 1;
+
+--C.	Write a PL/SQL block that performs the following in this order
+
+DECLARE
+    v_id STUDENT.STUDENT_ID%TYPE;
+    v_Lname STUDENT.LAST_NAME%TYPE;
+BEGIN
+    -- STUDENT: The most classes enrolled
+    BEGIN
+        SELECT LAST_NAME INTO v_Lname 
+        FROM STUDENT
+        WHERE STUDENT_ID IN
+            (
+                SELECT STUDENT_ID FROM ENROLLMENT
+                GROUP BY STUDENT_ID
+                HAVING COUNT(STUDENT_ID)=
+                (
+                    SELECT MAX(COUNT(STUDENT_ID))
+                    FROM ENROLLMENT
+                    GROUP BY student_id
+                )
+           ) 
+        AND LENGTH(LAST_NAME)<9;
+        INSERT INTO Lab1_tab VALUES(Lab1_seq.NEXTVAL, v_Lname);
+        
+        EXCEPTION
+            WHEN TOO_MANY_ROWS THEN
+                DBMS_OUTPUT.PUT_LINE('Multiple Names');
+    END;
+
+   --STUDENT: The least course enolled
+   BEGIN
+        SELECT LAST_NAME INTO v_Lname
+        FROM STUDENT
+        WHERE STUDENT_ID IN
+            (
+                SELECT STUDENT_ID FROM ENROLLMENT
+                GROUP BY STUDENT_ID
+                HAVING COUNT(STUDENT_ID)=
+                    (
+                        SELECT MIN(COUNT(STUDENT_ID))
+                        FROM ENROLLMENT
+                        GROUP BY student_id
+                    )
+            );
+            
+        INSERT INTO Lab1_tab VALUES(Lab1_seq.NEXTVAL, v_Lname);
+        --EXCEPTION HANDLING  
+        EXCEPTION
+            WHEN TOO_MANY_ROWS THEN
+                INSERT INTO Lab1_tab VALUES(Lab1_seq.NEXTVAL, 'Multiple Names');
+    END;
+   
+    --INSTRUCTOR: The least classes 
+    BEGIN
+        SELECT LAST_NAME INTO v_Lname 
+        FROM INSTRUCTOR
+        WHERE INSTRUCTOR_ID IN
+            (
+                SELECT INSTRUCTOR_ID 
+                FROM SECTION
+                GROUP BY INSTRUCTOR_ID
+                HAVING COUNT(INSTRUCTOR_ID) =
+                    (
+                        SELECT MIN(COUNT(INSTRUCTOR_ID)) FROM SECTION
+                        GROUP BY INSTRUCTOR_ID
+                    )
+            )
+        AND LAST_NAME NOT LIKE '%s';
+        
+        INSERT INTO Lab1_tab VALUES(v_id, v_Lname);
+        
+        --EXCEPTION HANDLING
+        EXCEPTION
+            WHEN TOO_MANY_ROWS THEN
+                INSERT INTO Lab1_tab VALUES(Lab1_seq.NEXTVAL, 'Multiple Names');
+   END; 
+
+   --INSTRUCTOR: The most classes
+    BEGIN
+        SELECT LAST_NAME INTO v_Lname
+        FROM INSTRUCTOR
+        WHERE INSTRUCTOR_ID IN
+            (
+                SELECT INSTRUCTOR_ID 
+                FROM SECTION
+                GROUP BY INSTRUCTOR_ID
+                HAVING COUNT(INSTRUCTOR_ID)=
+                    (
+                        SELECT MAX(COUNT(INSTRUCTOR_ID))
+                        FROM SECTION
+                        GROUP BY INSTRUCTOR_ID
+                    )
+             );   
+        
+         INSERT INTO Lab1_tab VALUES(Lab1_seq.NEXTVAL, v_Lname);
+
+        --EXCEPTION HANDLING
+        EXCEPTION
+            WHEN TOO_MANY_ROWS THEN
+                INSERT INTO Lab1_tab VALUES(Lab1_seq.NEXTVAL, 'Multiple Names');
+    END;
+END;
+ 
+
+
+OUTPUT:
+        ________________________
+	|ID    |  LNAME        |
+        ------------------------
+	|1     |Williams       |
+        ------------------------
+	|6     |Multiple Names |
+        ------------------------
+	|(null)|Lowry          |
+	------------------------
+	|11    |Multiple Names |
+        ------------------------

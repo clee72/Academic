@@ -1,0 +1,244 @@
+---------------------------
+| DBS501 LAB 3 Submission |
+---------------------------
+			  
+
+
+--Question 1)------------------------------------------------------------------------------------------
+
+SET SERVEROUTPUT ON
+DECLARE
+    CURSOR c_cour IS
+    SELECT description 
+    FROM course 
+    WHERE prerequisite IS NULL;
+    
+    v_cour_record c_cour%ROWTYPE;
+    v_total# NUMBER;
+BEGIN
+    OPEN c_cour;
+    LOOP
+        FETCH c_cour INTO v_cour_record;
+        EXIT WHEN c_cour%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('Course Description : '||c_cour%ROWCOUNT||' : '||v_cour_record.description);
+        v_total# := c_cour%ROWCOUNT;
+    END LOOP;
+    CLOSE c_cour;
+    
+    DBMS_OUTPUT.PUT_LINE('*****************************************');
+    DBMS_OUTPUT.PUT_LINE('Total # of Courses without the Prerequisite is: '||v_total#);
+END;
+
+
+OUTPUT #1:
+
+Course Description : 1 : DP Overview
+Course Description : 2 : Intro to Computers
+Course Description : 3 : Java for C/C++ Programmers
+Course Description : 4 : Operating Systems
+*****************************************
+Total # of Courses without the Prerequisite is: 4
+PL/SQL procedure successfully completed.
+
+
+--Question 2)------------------------------------------------------------------------------------------
+
+
+SET SERVEROUTPUT ON
+
+DECLARE
+    TYPE cour_tab_type IS TABLE OF
+    course.description%TYPE
+    INDEX BY PLS_INTEGER;
+    cour_tab cour_tab_type;
+    
+    CURSOR c_cour IS
+    SELECT description 
+    FROM course
+    WHERE prerequisite IS NULL;
+    
+    a NUMBER := 0;        
+BEGIN
+    FOR i IN c_cour LOOP
+        a := a + 1;
+        cour_tab(a) := i.description;
+        DBMS_OUTPUT.PUT_LINE('Course Description : '||a||' : '||cour_tab(a)); 
+    END LOOP;
+    
+    DBMS_OUTPUT.PUT_LINE('*****************************************');
+    DBMS_OUTPUT.PUT_LINE('Total # of Courses without the Prerequisite is: '||a);
+END;
+
+
+OUTPUT #2:
+
+Course Description : 1 : DP Overview
+Course Description : 2 : Intro to Computers
+Course Description : 3 : Java for C/C++ Programmers
+Course Description : 4 : Operating Systems
+*****************************************
+Total # of Courses without the Prerequisite is: 4
+PL/SQL procedure successfully completed.
+
+--Question 3)------------------------------------------------------------------------------------------
+
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+
+ACCEPT v_zip PROMPT 'Enter first 3 digits for a Zip Code: ';
+
+DECLARE
+    TYPE zip_rec IS RECORD(
+        v_zip student.zip%TYPE,
+        v_stu# NUMBER(3) DEFAULT 0);
+     z_rec zip_rec;
+    
+     CURSOR c_zip IS
+     SELECT zip, COUNT(student_id) AS stu# 
+     FROM student
+     WHERE zip LIKE '&v_zip%'
+     GROUP BY zip
+     ORDER BY zip;
+     c_rec c_zip%ROWTYPE;
+     
+     v_zip_sum NUMBER := 0;
+     v_stu_sum NUMBER := 0;
+BEGIN    
+    OPEN c_zip;
+    FETCH c_zip INTO c_rec;
+    IF c_zip%NOTFOUND THEN
+        DBMS_OUTPUT.PUT_LINE('This zip area is student empty. Please, try again.');
+    ELSE
+        CLOSE c_zip;
+        OPEN c_zip;
+        LOOP
+            FETCH c_zip INTO c_rec;
+            EXIT WHEN c_zip%NOTFOUND;
+            
+            SELECT c_rec.zip, c_rec.stu# INTO z_rec.v_zip, z_rec.v_stu#
+            FROM student
+            WHERE zip = c_rec.zip
+            GROUP BY c_rec.zip, c_rec.stu#;
+            
+            v_zip_sum := c_zip%ROWCOUNT;
+            v_stu_sum := v_stu_sum + z_rec.v_stu#;
+            
+            DBMS_OUTPUT.PUT_LINE('Zip code : '||z_rec.v_zip||' has exactly '||z_rec.v_stu#||' students enrolled.');
+        END LOOP;
+        DBMS_OUTPUT.PUT_LINE('************************************************');
+        DBMS_OUTPUT.PUT_LINE('Total # of zip codes under '||'&v_zip'||' is '||v_zip_sum);
+        DBMS_OUTPUT.PUT_LINE('Total # of Students under zip code '||'&v_zip'||' is '||v_stu_sum);
+    END IF;
+    CLOSE c_zip;
+END;
+
+
+OUTPUT #3:
+
+073
+
+Zip code : 07302 has exactly 1 students enrolled.
+Zip code : 07304 has exactly 2 students enrolled.
+Zip code : 07306 has exactly 4 students enrolled.
+Zip code : 07307 has exactly 3 students enrolled.
+************************************************
+Total # of zip codes under 073 is 4
+Total # of Students under zip code 073 is 10
+PL/SQL procedure successfully completed
+
+013
+This zip area is student empty. Please, try again.
+PL/SQL procedure successfully completed.
+
+
+--Question 4)------------------------------------------------------------------------------------------
+
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+
+ACCEPT v_zip PROMPT 'Enter first 3 digits for a Zip Code: ';
+DECLARE
+    TYPE zip_tab_type IS TABLE OF
+    student.zip%TYPE
+    INDEX BY PLS_INTEGER;
+    zip_tab zip_tab_type;
+    
+    TYPE count_tab_type IS TABLE OF NUMBER
+    INDEX BY PLS_INTEGER;
+    count_tab count_tab_type;
+    
+    CURSOR c_zip IS
+    SELECT zip, COUNT(student_id) AS stu# 
+    FROM student
+    WHERE zip LIKE '&v_zip%'
+    GROUP BY zip
+    ORDER BY zip;
+    c_rec c_zip%ROWTYPE;
+    
+    a NUMBER := 0;
+    v_zip_sum NUMBER := 0;
+    v_stu_sum NUMBER  := 0;
+    
+BEGIN
+    OPEN c_zip;
+    FETCH c_zip INTO c_rec;
+    
+    IF c_zip%NOTFOUND THEN
+        DBMS_OUTPUT.PUT_LINE('This zip area is student empty. Please, try again.');
+    ELSE
+        CLOSE c_zip;
+        FOR i IN c_zip LOOP
+            a := a + 1;
+            
+            SELECT i.zip, i.stu# INTO zip_tab(a), count_tab(a)
+            FROM student
+            WHERE zip = i.zip
+            GROUP BY i.zip, i.stu#;
+            
+            v_zip_sum := c_zip%ROWCOUNT;
+            v_stu_sum := v_stu_sum + count_tab(a);
+            
+            DBMS_OUTPUT.PUT_LINE('Zip code : '||zip_tab(a)||' has exactly '||count_tab(a)||' students enrolled.'); 
+        END LOOP;
+        DBMS_OUTPUT.PUT_LINE('************************************************');
+        DBMS_OUTPUT.PUT_LINE('Total # of zip codes under '||'&v_zip'||' is '||v_zip_sum);
+        DBMS_OUTPUT.PUT_LINE('Total # of Students under zip code '||'&v_zip'||' is '||v_stu_sum);
+  END IF;
+END;
+
+
+
+OUTPUT #4:
+
+073 
+
+Zip code : 07302 has exactly 1 students enrolled.
+Zip code : 07304 has exactly 2 students enrolled.
+Zip code : 07306 has exactly 4 students enrolled.
+Zip code : 07307 has exactly 3 students enrolled.
+************************************************
+Total # of zip codes under 073 is 4
+Total # of Students under zip code 073 is 10
+PL/SQL procedure successfully completed.
+
+013
+
+This zip area is student empty. Please, try again.
+PL/SQL procedure successfully completed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

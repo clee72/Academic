@@ -1,0 +1,196 @@
+---------------------------
+| DBS501 LAB 2 Submission |
+---------------------------
+			  
+
+
+--Question 1)------------------------------------------------------------------------------------------
+
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+ACCEPT v_scale PROMPT 'Enter your input scale (C or F) for temperature: ';
+ACCEPT v_temp PROMPT 'Enter your temperature value to be converted: ';
+
+DECLARE
+    v_input_scale CHAR(1) := '&v_scale';
+    v_con_temp NUMBER(3,1);
+BEGIN
+    IF v_input_scale = 'C' OR v_input_scale = 'F' THEN
+        IF v_input_scale = 'C' THEN
+            v_con_temp := (&v_temp * 9/5) + 32;
+            DBMS_OUTPUT.PUT_LINE('Your converted temperature in F is exactly '||v_con_temp);
+        ELSE
+            v_con_temp := (&v_temp - 32) * 5/9;
+            DBMS_OUTPUT.PUT_LINE('Your converted temperature in C is exactly '||v_con_temp);
+        END IF;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('This is NOT a valid scale. Must be C or F.'); 
+    END IF;
+END;
+
+*OUTPUT:
+This is NOT a valid scale. Must be C or F.
+PL/SQL procedure successfully completed.
+
+Your converted temperature in F is exactly 86
+PL/SQL procedure successfully completed.
+
+Your converted temperature in C is exactly -31.7
+PL/SQL procedure successfully completed.
+
+
+--Question 2)------------------------------------------------------------------------------------------
+
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+ACCEPT v_ins_id PROMPT 'Please enter the Instructor Id: ';
+
+DECLARE
+    v_fname instructor.first_name%TYPE;
+    v_lname instructor.last_name%TYPE;
+    v_count NUMBER;
+    v_msg VARCHAR2(50);
+BEGIN
+    SELECT COUNT(s.section_id), i.first_name, i.last_name INTO v_count, v_fname, v_lname
+    FROM section s 
+    RIGHT JOIN instructor i
+    ON s.instructor_id = i.instructor_id
+    WHERE i.instructor_id = &v_ins_id 
+    GROUP BY i.first_name, i.last_name;
+    
+    v_msg := CASE 
+        WHEN v_count >= 10 THEN 'This instructor needs to rest in the next term.'
+        WHEN v_count >= 4 THEN 'This instructor teaches enough sections.'
+        ELSE 'This instructor may teach more sections.'
+    END;
+    
+    DBMS_OUTPUT.PUT_LINE ('Instructor, '|| v_fname||' '||v_lname||', teaches '||v_count||' section(s)');
+    DBMS_OUTPUT.PUT_LINE(v_msg);    
+    
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            DBMS_OUTPUT.PUT_LINE('This is not a valid instructor');
+END;
+
+*OUTPUT:
+This is not a valid instructor
+PL/SQL procedure successfully completed.
+
+Instructor, Tom Wojick, teaches 10 section(s)
+This instructor needs to rest in the next term.
+PL/SQL procedure successfully completed.
+
+Instructor, Fernand Hanks, teaches 9 section(s)
+This instructor teaches enough sections.
+PL/SQL procedure successfully completed.
+
+Instructor, Rick Chow, teaches 0 section(s)
+This instructor may teach more sections.
+PL/SQL procedure successfully completed.
+
+
+--Question 3)------------------------------------------------------------------------------------------
+
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+ACCEPT v_val PROMPT 'Please enter a Positive Integer: ';
+
+DECLARE
+    v_sum NUMBER := 0;
+    v_value NUMBER := &v_val;
+BEGIN
+    IF MOD(v_value, 2) = 0 THEN
+        WHILE v_value > 0 LOOP
+            v_sum := v_sum + v_value;
+            v_value := v_value - 2;
+        END LOOP;
+        DBMS_OUTPUT.PUT_LINE('The sum of Even integers between 1 and '||&v_val||' is '||v_sum);
+    ELSE 
+        WHILE v_value > 0 LOOP
+            v_sum := v_sum + v_value;
+            v_value := v_value - 2;
+        END LOOP;
+        DBMS_OUTPUT.PUT_LINE('The sum of Odd integers between 1 and '|| &v_val||' is '||v_sum);
+    END IF; 
+END;
+
+*OUTPUT:
+The sum of Even integers between 1 and 12 is 42
+PL/SQL procedure successfully completed.
+
+The sum of Odd integers between 1 and 901 is 203401
+PL/SQL procedure successfully completed.
+
+
+--Question 4)------------------------------------------------------------------------------------------
+
+SET SERVEROUTPUT ON;
+SET VERIFY OFF;
+ACCEPT v_location_id PROMPT 'Enter valid Location Id: ';
+
+DECLARE
+    v_dept_id departments.department_id%TYPE;
+    v_emp_id employees.employee_id%TYPE;
+    v_dept_num NUMBER;
+    v_emp_num NUMBER;
+BEGIN
+    UPDATE  Departments   SET   location_id = 1400
+    WHERE  department_id IN (40,70) ;
+
+    SELECT COUNT(department_id) INTO v_dept_num
+    FROM departments
+    WHERE location_id = &v_location_id;
+    
+    SELECT COUNT(employee_id) INTO v_emp_num
+    FROM employees e JOIN departments d ON e.department_id = d.department_id
+    WHERE d.location_id = &v_location_id;
+    
+    FOR i IN 1..v_dept_num LOOP
+        DBMS_OUTPUT.PUT_LINE('Outer Loop: Department #'||i);
+        FOR j IN 1..v_emp_num LOOP
+            DBMS_OUTPUT.PUT_LINE('* Inner Loop: Employee #'||j);
+        END LOOP;
+    END LOOP;
+    ROLLBACK;
+END;
+
+*OUTPUT:
+Outer Loop: Department #1
+* Inner Loop: Employee #1
+* Inner Loop: Employee #2
+PL/SQL procedure successfully completed.
+
+Outer Loop: Department #1
+* Inner Loop: Employee #1
+* Inner Loop: Employee #2
+* Inner Loop: Employee #3
+* Inner Loop: Employee #4
+* Inner Loop: Employee #5
+* Inner Loop: Employee #6
+* Inner Loop: Employee #7
+Outer Loop: Department #2
+* Inner Loop: Employee #1
+* Inner Loop: Employee #2
+* Inner Loop: Employee #3
+* Inner Loop: Employee #4
+* Inner Loop: Employee #5
+* Inner Loop: Employee #6
+* Inner Loop: Employee #7
+Outer Loop: Department #3
+* Inner Loop: Employee #1
+* Inner Loop: Employee #2
+* Inner Loop: Employee #3
+* Inner Loop: Employee #4
+* Inner Loop: Employee #5
+* Inner Loop: Employee #6
+* Inner Loop: Employee #7
+PL/SQL procedure successfully completed.
+
+
+
+
+
+
+
+
+

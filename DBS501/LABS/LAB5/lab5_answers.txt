@@ -1,0 +1,333 @@
++-------------------------+
+| DBS501 LAB 5 Submission |
++-------------------------+
+			  
+
+--Question 1)------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION Get_Deser (
+    p_sid IN section.section_id%TYPE)
+RETURN VARCHAR2 
+IS
+    v_desc course.description%TYPE;
+    v_result VARCHAR2(100);
+BEGIN
+    SELECT c.description INTO v_desc
+    FROM section s JOIN course c
+    ON s.course_no = c.course_no 
+    WHERE s.section_id = p_sid;
+    
+    v_result := 'Course Description for Section Id '||p_sid||' is '||v_desc; 
+    RETURN v_result;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        v_result :='There is NO such section id: '|| p_sid;
+        RETURN v_result;
+END Get_Deser;
+/
+
+SET SERVEROUTPUT ON
+VARIABLE description VARCHAR2(100)
+EXECUTE :description := Get_Deser(150);
+PRINT description
+
+
+VARIABLE description VARCHAR2(100)
+EXECUTE :description := Get_Deser(999);
+PRINT description
+
+OUTPUT:
+CASE 1: TEST WITH 150
+
+DESCRIPTION
+--------------------------------------------------------------------------------
+Course Description for Section Id 150 is Intro to Java Programming
+
+
+CASE 2: TEST WITH 999
+
+DESCRIPTION
+--------------------------------------------------------------------------------
+There is NO such section id: 999
+
+
+
+--Question 2)------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE show_bizdays(
+    p_start_date  DATE DEFAULT SYSDATE,
+    P_day_num  NUMBER DEFAULT 21)
+IS
+    idx NUMBER := 0;
+    v_start DATE := p_start_date;
+    v_days NUMBER := p_day_num;
+    v_day VARCHAR2(10);
+    
+BEGIN
+    WHILE v_days > 0 LOOP
+        v_start := v_start + 1;
+        SELECT TO_CHAR(v_start, 'DAY') INTO v_day
+        FROM dual;
+
+        IF INSTR(v_day, 'SATURDAY')= 0 AND INSTR( v_day ,'SUNDAY')=0 THEN
+            idx := idx + 1;
+            DBMS_OUTPUT.PUT_LINE('The index is : '||idx||' and the table value is: '||TO_CHAR(v_start ));
+        
+            v_days := v_days - 1; 
+        END IF;
+    END LOOP;
+END show_bizdays;
+/
+
+SET SERVEROUTPUT ON
+
+EXECUTE show_bizdays;
+EXECUTE show_bizdays(sysdate+7, 10);
+
+OUTPUT: SYSDATE is 21-JUNE-20
+
+1.EXECUTE show_bizdays;
+
+The index is : 1 and the table value is: 22-JUN-20
+The index is : 2 and the table value is: 23-JUN-20
+The index is : 3 and the table value is: 24-JUN-20
+The index is : 4 and the table value is: 25-JUN-20
+The index is : 5 and the table value is: 26-JUN-20
+The index is : 6 and the table value is: 29-JUN-20
+The index is : 7 and the table value is: 30-JUN-20
+The index is : 8 and the table value is: 01-JUL-20
+The index is : 9 and the table value is: 02-JUL-20
+The index is : 10 and the table value is: 03-JUL-20
+The index is : 11 and the table value is: 06-JUL-20
+The index is : 12 and the table value is: 07-JUL-20
+The index is : 13 and the table value is: 08-JUL-20
+The index is : 14 and the table value is: 09-JUL-20
+The index is : 15 and the table value is: 10-JUL-20
+The index is : 16 and the table value is: 13-JUL-20
+The index is : 17 and the table value is: 14-JUL-20
+The index is : 18 and the table value is: 15-JUL-20
+The index is : 19 and the table value is: 16-JUL-20
+The index is : 20 and the table value is: 17-JUL-20
+The index is : 21 and the table value is: 20-JUL-20
+
+2.EXECUTE show_bizdays(sysdate+7, 10);
+
+The index is : 1 and the table value is: 29-JUN-20
+The index is : 2 and the table value is: 30-JUN-20
+The index is : 3 and the table value is: 01-JUL-20
+The index is : 4 and the table value is: 02-JUL-20
+The index is : 5 and the table value is: 03-JUL-20
+The index is : 6 and the table value is: 06-JUL-20
+The index is : 7 and the table value is: 07-JUL-20
+The index is : 8 and the table value is: 08-JUL-20
+The index is : 9 and the table value is: 09-JUL-20
+The index is : 10 and the table value is: 10-JUL-20
+
+
+
+--Question 3)------------------------------------------------------------------------------------------
+
+--Q3 A)
+CREATE OR REPLACE PACKAGE Lab5 IS
+    FUNCTION Get_Deser (
+    p_sid IN section.section_id%TYPE)
+    RETURN VARCHAR2;
+    
+    PROCEDURE show_bizdays(
+    p_start_date  DATE DEFAULT SYSDATE,
+    P_day_num  NUMBER DEFAULT 21);
+END Lab5;
+/
+
+--Q3 B)
+CREATE OR REPLACE PACKAGE BODY Lab5 IS
+    FUNCTION Get_Deser (
+        p_sid IN section.section_id%TYPE)
+    RETURN VARCHAR2 
+    IS
+        v_desc course.description%TYPE;
+        v_result VARCHAR2(100);
+    BEGIN
+        SELECT c.description INTO v_desc
+        FROM section s, course c
+        WHERE s.course_no = c.course_no AND s.section_id = p_sid;
+        
+        v_result := 'Course Description for Section Id '||p_sid||' is '||v_desc; 
+        RETURN v_result;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            v_result :='There is NO such section id: '|| p_sid;
+            RETURN v_result;
+    END Get_Deser;
+    
+    
+    PROCEDURE show_bizdays(
+        p_start_date  DATE DEFAULT SYSDATE,
+        P_day_num  NUMBER DEFAULT 21)
+    IS
+        idx NUMBER := 0;
+        v_start DATE := p_start_date;
+        v_days NUMBER := p_day_num;
+        v_day VARCHAR2(10);
+        
+    BEGIN
+        WHILE v_days > 0 LOOP
+            v_start := v_start + 1;
+            SELECT TO_CHAR(v_start, 'DAY') INTO v_day
+            FROM dual;
+    
+            IF INSTR(v_day, 'SATURDAY')= 0 AND INSTR( v_day ,'SUNDAY')=0 THEN
+                idx := idx + 1;
+                DBMS_OUTPUT.PUT_LINE('The index is : '||idx||' and the table value is: '||TO_CHAR(v_start ));
+                v_days := v_days - 1;
+            END IF;
+        END LOOP;
+    END show_bizdays;
+    
+END Lab5;
+/
+
+--Q3 C)
+SET SERVEROUTPUT ON
+
+EXECUTE Lab5.show_bizdays;
+EXECUTE Lab5.show_bizdays(sysdate+7, 10);
+
+
+OUTPUT: SYSDATE is 21-JUNE-20
+
+1. EXECUTE Lab5.show_bizdays;
+
+The index is : 1 and the table value is: 22-JUN-20
+The index is : 2 and the table value is: 23-JUN-20
+The index is : 3 and the table value is: 24-JUN-20
+The index is : 4 and the table value is: 25-JUN-20
+The index is : 5 and the table value is: 26-JUN-20
+The index is : 6 and the table value is: 29-JUN-20
+The index is : 7 and the table value is: 30-JUN-20
+The index is : 8 and the table value is: 01-JUL-20
+The index is : 9 and the table value is: 02-JUL-20
+The index is : 10 and the table value is: 03-JUL-20
+The index is : 11 and the table value is: 06-JUL-20
+The index is : 12 and the table value is: 07-JUL-20
+The index is : 13 and the table value is: 08-JUL-20
+The index is : 14 and the table value is: 09-JUL-20
+The index is : 15 and the table value is: 10-JUL-20
+The index is : 16 and the table value is: 13-JUL-20
+The index is : 17 and the table value is: 14-JUL-20
+The index is : 18 and the table value is: 15-JUL-20
+The index is : 19 and the table value is: 16-JUL-20
+The index is : 20 and the table value is: 17-JUL-20
+The index is : 21 and the table value is: 20-JUL-20
+
+
+2. EXECUTE Lab5.show_bizdays(sysdate+7, 10);
+
+The index is : 1 and the table value is: 29-JUN-20
+The index is : 2 and the table value is: 30-JUN-20
+The index is : 3 and the table value is: 01-JUL-20
+The index is : 4 and the table value is: 02-JUL-20
+The index is : 5 and the table value is: 03-JUL-20
+The index is : 6 and the table value is: 06-JUL-20
+The index is : 7 and the table value is: 07-JUL-20
+The index is : 8 and the table value is: 08-JUL-20
+The index is : 9 and the table value is: 09-JUL-20
+The index is : 10 and the table value is: 10-JUL-20
+
+
+
+--Question 4)------------------------------------------------------------------------------------------
+
+--Q4 A)
+CREATE OR REPLACE Package Lab5 Is 
+    PROCEDURE show_bizdays (
+        p_start_date  DATE DEFAULT SYSDATE);
+      
+    PROCEDURE show_bizdays(
+        p_start_date  DATE DEFAULT SYSDATE,
+        P_day_num  NUMBER);  
+END Lab5;
+/
+
+--A4 B)
+SET VERIFY OFF
+CREATE OR REPLACE Package Body Lab5 IS
+
+    PROCEDURE show_bizdays(
+        p_start_date  DATE DEFAULT SYSDATE )
+    IS
+        idx NUMBER := 0;
+        v_start DATE := p_start_date;
+        v_days NUMBER := &v_number_of_days;
+        v_day VARCHAR2(10); 
+    BEGIN
+        WHILE v_days > 0 LOOP
+            v_start := v_start + 1;
+            
+            SELECT TO_CHAR(v_start, 'DAY') INTO v_day
+            FROM dual;
+    
+            IF INSTR(v_day, 'SATURDAY')= 0 AND INSTR( v_day ,'SUNDAY')=0 THEN
+                idx := idx + 1;
+                DBMS_OUTPUT.PUT_LINE('The index is : '||idx||' and the table value is: '||TO_CHAR(v_start ));
+                v_days := v_days - 1;
+            END IF;
+        END LOOP;
+    END show_bizdays;
+    
+    PROCEDURE show_bizdays(
+        p_start_date  DATE DEFAULT SYSDATE,
+        P_day_num  NUMBER )
+    IS
+        idx NUMBER := 0;
+        v_start DATE := p_start_date;
+        v_days NUMBER := p_day_num;
+        v_day VARCHAR2(10);
+        
+    BEGIN
+        WHILE v_days > 0 LOOP
+            v_start := v_start + 1;
+            
+            SELECT TO_CHAR(v_start, 'DAY') INTO v_day
+            FROM dual;
+    
+            IF INSTR(v_day, 'SATURDAY')= 0 AND INSTR( v_day ,'SUNDAY')=0 THEN
+                idx := idx + 1;
+                DBMS_OUTPUT.PUT_LINE('The index is : '||idx||' and the table value is: '||TO_CHAR(v_start ));
+                v_days := v_days - 1;
+            END IF;
+        END LOOP;
+    END show_bizdays;
+    
+END Lab5;
+/
+
+--Q4 C)
+
+EXECUTE Lab5.show_bizdays(p_start_date=>sysdate);
+EXECUTE Lab5.show_bizdays(p_day_num=>7);
+
+
+
+OUTPUT: If user input is 2 and sysdate is June-25-2020 then
+
+1. EXECUTE Lab5.show_bizdays(p_start_date=>sysdate);
+
+The index is : 1 and the table value is: 26-JUN-20
+The index is : 2 and the table value is: 29-JUN-20
+
+PL/SQL procedure successfully completed.
+
+
+
+2.EXECUTE Lab5.show_bizdays(p_day_num=>7);
+
+The index is : 1 and the table value is: 26-JUN-20
+The index is : 2 and the table value is: 29-JUN-20
+The index is : 3 and the table value is: 30-JUN-20
+The index is : 4 and the table value is: 01-JUL-20
+The index is : 5 and the table value is: 02-JUL-20
+The index is : 6 and the table value is: 03-JUL-20
+The index is : 7 and the table value is: 06-JUL-20
+
+PL/SQL procedure successfully completed.

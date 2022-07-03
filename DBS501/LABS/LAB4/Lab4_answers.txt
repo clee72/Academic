@@ -1,0 +1,386 @@
++-------------------------+
+| DBS501 LAB 4 Submission |
++-------------------------+
+
+
+
+--Question 1)------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE mine(
+    p_date IN VARCHAR2,
+    p_type IN CHAR)
+IS
+    v_last_day VARCHAR2(20);
+    v_obj_type VARCHAR2(20);
+    v_obj# NUMBER;
+    e_invalid_letter EXCEPTION;
+BEGIN
+    SELECT TO_CHAR(LAST_DAY(TO_DATE(p_date , 'MM/YY' )),'Day') INTO v_last_day
+    FROM dual;
+    DBMS_OUTPUT.PUT_LINE('Last day of the month '||p_date||' is '||v_last_day);
+    
+    IF p_type = 'P' OR p_type = 'F' OR p_type = 'B' THEN
+        IF p_type = 'P' THEN
+            v_obj_type := 'PROCEDURE';
+        ELSIF p_type = 'F' THEN
+            v_obj_type := 'FUNCTION';
+        ELSE
+            v_obj_type := 'PACKAGE BODY';
+        END IF;
+        
+        SELECT COUNT(*) INTO v_obj#
+        FROM user_objects 
+        WHERE object_type = v_obj_type;
+        
+        DBMS_OUTPUT.PUT_LINE('Number of stored objects of type '||p_type||' is '||v_obj#);
+    ELSE
+        RAISE e_invalid_letter;
+    END IF;
+EXCEPTION
+        WHEN e_invalid_letter THEN
+           DBMS_OUTPUT.PUT_LINE('You have entered an Invalid letter for the stored object. Try P, F or B. ');     
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('You have entered an Invalid FORMAT for the MONTH and YEAR. Try MM/YY.');
+END mine;
+/
+
+SET SERVEROUTPUT ON
+
+EXECUTE  mine ('11/09','P')
+EXECUTE  mine ('12/09','F')
+EXECUTE  mine ('01/10','T')
+EXECUTE  mine ('13/09','P')
+EXECUTE  mine ('11/09','B')
+
+OUTPUT:
+
+CASE 1: EXECUTE  mine ('11/09','P')
+  Last day of the month 11/09 is Monday   
+  Number of stored objects of type P is 9
+  PL/SQL procedure successfully completed.
+ 
+CASE 2: EXECUTE  mine ('12/09','F')
+  Last day of the month 12/09 is Thursday 
+  Number of stored objects of type F is 3
+  PL/SQL procedure successfully completed.
+
+CASE 3: EXECUTE  mine ('01/10','T')
+  Last day of the month 01/10 is Sunday   
+  You have entered an Invalid letter for the stored object. Try P, F or B. 
+  PL/SQL procedure successfully completed.
+
+CASE 4: EXECUTE  mine ('13/09','P')
+  You have entered an Invalid FORMAT for the MONTH and YEAR. Try MM/YY.
+  PL/SQL procedure successfully completed.
+
+CASE 5: EXECUTE  mine ('11/09','B')
+  Last day of the month 11/09 is Monday   
+  Number of stored objects of type B is 2
+  PL/SQL procedure successfully completed.
+
+--Question 2)------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE add_zip(
+    p_zip IN zipcode.zip%TYPE,
+    p_city IN zipcode.city%TYPE,
+    p_state IN zipcode.state%TYPE,
+    p_flag OUT VARCHAR2,
+    p_row# OUT NUMBER
+)
+IS
+    v_flag VARCHAR2(5) := 'NO';
+BEGIN
+    SELECT count(*) INTO p_row#
+    FROM zipcode
+    WHERE state = p_state;
+    
+    SELECT 'YES' INTO v_flag
+    FROM zipcode
+    WHERE zip = p_zip;
+    
+    IF v_flag = 'YES' THEN
+        DBMS_OUTPUT.PUT_LINE('This ZIPCODE '||p_zip||' is already in the DataBase. Try again.'); 
+        p_flag := 'FAILURE';
+    END IF; 
+    
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        INSERT INTO zipcode VALUES(p_zip, p_city, p_state, USER, SYSDATE, USER, SYSDATE);
+        p_flag := 'SUCCESS';
+        
+        SELECT count(*) INTO p_row#
+        FROM zipcode
+        WHERE state = p_state;
+END add_zip;
+/
+
+SET SERVEROUTPUT ON
+
+VARIABLE flag VARCHAR2(10)
+VARIABLE zipnum NUMBER
+
+EXECUTE add_zip('18104', 'Chicago', 'MI',:flag, :zipnum)
+PRINT flag zipnum;
+SELECT * FROM zipcode WHERE state = 'MI';
+ROLLBACK;
+
+EXECUTE add_zip('48104', 'Chicago', 'MI',:flag, :zipnum)
+PRINT flag zipnum;
+SELECT * FROM zipcode WHERE state = 'MI';
+ROLLBACK;
+
+OUTPUT:
+
+CASE 1: 
+  EXECUTE add_zip('18104', 'Chicago', 'MI',:flag, :zipnum)
+  PRINT flag zipnum;
+        +-------------+
+	|FLAG         |
+	+-------------+
+	|SUCCESS      |
+        +-------------+
+	
+        +-------------+
+	|ZIPNUM       |
+	+-------------+
+	|          2  |
+        +-------------+	
+	    
+  SELECT * FROM zipcode WHERE state = 'MI';
+
+ZIP	CITY		STATE       CREATED_BY      CREATED_DATE       MODIFIED_BY      MODIFIED_DATE
+-----   ---------       -----      -------------   -------------       -----------      -------------
+48104	Ann Arbor	 MI	    AMORRISO	    03-AUG-99	       ARISCHER	        24-NOV-99
+18104	Chicago		 MI	  DBS501_202A15	    14-JUN-20	      DBS501_202A15	14-JUN-20
+
+Rollback complete.
+
+CASE 2: This ZIPCODE 48104 is already in the DataBase. Try again.
+ EXECUTE add_zip('48104', 'Chicago', 'MI',:flag, :zipnum)
+ PRINT flag zipnum;
+        +-------------+
+	|FLAG         |
+	+-------------+
+	|FAILURE      |
+        +-------------+
+	
+        +-------------+
+	|ZIPNUM       |
+	+-------------+
+	|          1  |
+        +-------------+
+   SELECT * FROM zipcode WHERE state = 'MI';	
+
+ZIP	CITY		STATE       CREATED_BY      CREATED_DATE       MODIFIED_BY      MODIFIED_DATE
+-----   ---------       -----      -------------   -------------       -----------      -------------
+48104	Ann Arbor	 MI	    AMORRISO	    03-AUG-99	       ARISCHER	        24-NOV-99
+
+
+--Question 3)------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION exist_zip(
+    p_zip zipcode.zip%TYPE)
+RETURN BOOLEAN
+IS
+    zip_found BOOLEAN := FALSE;
+    v_flag VARCHAR2(5) := 'NO';
+BEGIN
+    BEGIN
+        SELECT 'YES' INTO v_flag
+        FROM zipcode
+        WHERE zip = p_zip;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            zip_found := FALSE;
+    END;
+    
+    IF v_flag = 'YES' THEN
+        zip_found := TRUE;
+    END IF;
+    RETURN zip_found;
+END exist_zip;
+/
+	
+SET SERVEROUTPUT ON
+CREATE OR REPLACE PROCEDURE add_zip2(
+    p_zip IN zipcode.zip%TYPE,
+    p_city IN zipcode.city%TYPE,
+    p_state IN zipcode.state%TYPE,
+    p_flag OUT VARCHAR2,
+    p_row# OUT NUMBER)
+IS
+    isExist BOOLEAN;
+BEGIN
+    isExist := exist_zip(p_zip);
+    
+    SELECT COUNT(*) INTO p_row#
+    FROM zipcode
+    WHERE state = p_state;
+    
+    IF isExist THEN
+        p_flag := 'FAILURE';
+        DBMS_OUTPUT.PUT_LINE('This ZIPCODE '||p_zip||' is already in the Database. Try again.'); 
+    ELSE
+        INSERT INTO zipcode VALUES(p_zip, p_city, p_state, USER, SYSDATE, USER, SYSDATE);
+        p_flag := 'SUCCESS';
+        
+        SELECT COUNT(*) INTO p_row#
+        FROM zipcode
+        WHERE state = p_state;
+    END IF;
+END add_zip2;
+/
+
+
+VARIABLE flag VARCHAR2(10)
+VARIABLE zipnum NUMBER
+
+EXECUTE add_zip2('18104', 'Chicago', 'MI',:flag, :zipnum)
+PRINT flag zipnum;
+SELECT * FROM zipcode WHERE state = 'MI';
+ROLLBACK;
+
+EXECUTE add_zip2('48104', 'Chicago', 'MI',:flag, :zipnum)
+PRINT flag zipnum;
+SELECT * FROM zipcode WHERE state = 'MI';
+ROLLBACK;
+
+OUTPUT:
+
+CASE 1: 
+  EXECUTE add_zip2('18104', 'Chicago', 'MI',:flag, :zipnum)
+  PRINT flag zipnum;
+        +-------------+
+	|FLAG         |
+	+-------------+
+	|SUCCESS      |
+        +-------------+
+	
+        +-------------+
+	|ZIPNUM       |
+	+-------------+
+	|          2  |
+        +-------------+	
+	    
+  SELECT * FROM zipcode WHERE state = 'MI';
+
+ZIP	CITY		STATE       CREATED_BY      CREATED_DATE       MODIFIED_BY      MODIFIED_DATE
+-----   ---------       -----      -------------   -------------       -----------      -------------
+48104	Ann Arbor	 MI	    AMORRISO	    03-AUG-99	       ARISCHER	        24-NOV-99
+18104	Chicago		 MI	  DBS501_202A15	    14-JUN-20	      DBS501_202A15	14-JUN-20
+
+Rollback complete.
+
+CASE 2: This ZIPCODE 48104 is already in the DataBase. Try again.
+ EXECUTE add_zip2('48104', 'Chicago', 'MI',:flag, :zipnum)
+ PRINT flag zipnum;
+        +-------------+
+	|FLAG         |
+	+-------------+
+	|FAILURE      |
+        +-------------+
+	
+        +-------------+
+	|ZIPNUM       |
+	+-------------+
+	|          1  |
+        +-------------+
+   SELECT * FROM zipcode WHERE state = 'MI';	
+
+ZIP	CITY		STATE       CREATED_BY      CREATED_DATE       MODIFIED_BY      MODIFIED_DATE
+-----   ---------       -----      -------------   -------------       -----------      -------------
+48104	Ann Arbor	 MI	    AMORRISO	    03-AUG-99	       ARISCHER	        24-NOV-99
+
+
+--Question 4)------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION instruct_status(
+    p_fname instructor.first_name%TYPE,
+    p_lname instructor.last_name%TYPE)
+RETURN VARCHAR2
+IS
+    v_sec# NUMBER;
+    v_flag VARCHAR2(30) := 'NO';
+    v_msg VARCHAR2(100);
+BEGIN
+    BEGIN
+        SELECT 'YES' INTO v_flag
+        FROM instructor
+        WHERE UPPER(first_name) = UPPER(p_fname) 
+        AND UPPER(last_name) = UPPER(p_lname);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            v_msg :='There is NO such instructor.';
+    END;
+    
+    IF v_flag = 'YES' THEN
+        SELECT count(s.section_id) INTO v_sec#
+        FROM section s RIGHT JOIN instructor i
+        ON s.instructor_id = i.instructor_id
+        WHERE UPPER(first_name) = UPPER(p_fname) AND UPPER(last_name) =UPPER(p_lname)
+        GROUP BY i.instructor_id;
+        
+        v_msg := CASE
+            WHEN v_sec# >9 THEN 'This Instructor will teach '|| v_sec#||' course and needs a vacation.'
+            WHEN v_sec#  > 0 AND v_sec# <= 9 THEN 'This Insturctor will teach '|| v_sec#||' course.'
+            ELSE 'This Instructor is NOT scheduled to teach.'
+        END;
+    END IF;
+     RETURN v_msg;
+END instruct_status;
+/
+
+SELECT last_name, instruct_status(first_name, last_name) AS "Instructor Status" 
+FROM instructor
+ORDER BY last_name;
+
+VARIABLE message VARCHAR2(50)
+EXEC :message :=instruct_status('PETER', 'PAN');
+PRINT message;
+
+EXEC :message :=instruct_status('IRENE', 'WILLIG');
+PRINT message;
+
+OUTPUT:
+CASE 1: A) After SELECT statement has been issued.
+
+LAST_NAME        Instructor Status
+---------       ----------------------------------------------------------
+Chow		This Instructor is NOT scheduled to teach.
+Frantzen	This Instructor will teach 10 course and needs a vacation.
+Hanks		This Insturctor will teach 9 course.
+Lowry		This Insturctor will teach 9 course.
+Morris		This Instructor will teach 10 course and needs a vacation.
+Pertez		This Instructor will teach 10 course and needs a vacation.
+Schorin		This Instructor will teach 10 course and needs a vacation.
+Smythe		This Instructor will teach 10 course and needs a vacation.
+Willig		This Instructor is NOT scheduled to teach.
+Wojick		This Instructor will teach 10 course and needs a vacation.
+
+
+CASE 2: B) After INPUT parameters PETER and PAN were provided	
+
+MESSAGE
+--------------------------------------------------------------------------------
+There is NO such instructor.
+
+
+CASE 3: C) After INPUT parameters IRENE and WILLIG were provided
+
+MESSAGE
+--------------------------------------------------------------------------------
+This Instructor is NOT scheduled to teach.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
