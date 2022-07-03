@@ -1,0 +1,148 @@
+/********************************************************************************* 
+*
+* WEB222 – Assignment #5
+*
+* I declare that this assignment is my own work in accordance with Seneca 
+* Academic Policy. No part of this assignment has been copied manually or 
+* electronically from any other source (including web sites) or distributed to 
+* other students. 
+* 
+* Name: _WONHWA LEE_ Student ID: _076086149_ Date: _2019/07/30_ 
+* 
+********************************************************************************/
+
+html {
+    margin: 0;
+    padding: 0;
+    max-width: 1190px;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #333;
+    color: whitesmoke;
+    overflow-y: auto;
+}
+
+/*logo*/
+#logo {
+    display: block;
+    margin: 2px;
+}
+
+header {
+    margin: 10px 20px;
+    color: darkgreen;
+    font-family: monospace;
+    width: 1190px;
+    height: 210px;
+    background-image: linear-gradient(gray, beige);
+    padding: 10px;
+    border: darkgreen solid 2px;
+}
+
+header a {
+    color: whitesmoke;
+}
+
+header h1 {
+    color: darkgreen;
+}
+
+header p {
+    float: unset;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/*body-layout*/
+#declare {
+    background-color: gray;
+    margin-left: 270px;
+    margin-top: 2px;
+    position: absolute;
+    width: 550px;
+    height: 640px;
+    border: darkkhaki solid 2px;
+}
+
+/*body-layout*/
+#declare p {
+    padding: 5px;
+}
+
+/*Navigation*/
+.side-nav {
+    position: absolute;
+    background-color: rgb(241, 241, 229);
+    padding: 0;
+    width: 187px;
+    height: 640px;
+    overflow: auto;
+    padding-top: 20px;
+    padding-left: 15px;
+    line-height: 40px;
+    margin-top: 2px;
+    margin-left: 20px;
+    border: darkkhaki solid 2px;
+}
+
+/*Navigation*/
+.side-nav a {
+    display: block;
+    color: black;
+    font-family: monospace;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+/*Navigation*/
+.side-nav a:hover {
+    text-decoration: underline;
+}
+
+/*footer*/
+footer {
+    background-color: rgb(47, 75, 47);
+    height: 30px;
+    width: 1185px;
+    padding: 15px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    border: darkgray solid 2px;
+}
+
+/*registration*/
+#sign-up {
+    background-color: rgb(129, 163, 134);
+    margin-left: 270px;
+    margin-top: 2px;
+    position: absolute;
+    width: 550px;
+    height: 600px;
+    border: darkgray solid 2px;
+    font-size: 12px;
+}
+
+/*sidePanel*/
+#sidePanel {
+    background-color: darkgoldenrod;
+    float: right;
+    position: relative;
+    height: 490px;
+    width: 360px;
+    color: black;
+    margin-left: 40px;
+    margin-top: 2px;
+    margin-bottom: 20px;
+    margin-right: -60px;
+    vertical-align: left;
+    padding: 5px;
+    border: darkgray solid 2px;
+    
+}

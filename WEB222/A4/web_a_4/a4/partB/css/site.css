@@ -1,0 +1,128 @@
+/* Place all of your CSS Code in this file */
+
+/********************************************************************************* 
+*
+* WEB222 – Assignment #4b
+*
+* I declare that this assignment is my own work in accordance with Seneca 
+* Academic Policy. No part of this assignment has been copied manually or 
+* electronically from any other source (including web sites) or distributed to 
+* other students. 
+* 
+* Name: _WONHWA LEE_ Student ID: _076086149_ Date: _2019/07/17_ 
+* 
+********************************************************************************/
+
+/* Select the class "main-container" and  set max-width and margin*/
+
+.main-container {
+    max-width: 960px;
+    margin: 0px auto;
+}
+
+/* Select all <nav> elements in the class "main-container" and set width and float to left. */
+
+.main-container nav {
+    width: 30%;
+    float: left;
+}
+
+/* Select the class "main" in the class "main-container" and set width and float to right.*/
+
+.main-container .main {
+    width: 70%;
+    float: right;
+}
+
+/* Select the <header> element in the class "main-container" and set padding, background-color, border, and margin.*/
+
+.main-container header {
+    padding: 10px;
+    background-color: #eeeeee;
+    border-bottom: 1px #cccccc solid;
+    margin-bottom: 30px;
+}
+
+/* Select <h1> element in the <header> of the class "main-container" and adjust size  and position */
+
+.main-container header h1 {
+    width: 70%;
+    font-size: 24px;
+    float: right;
+    text-align: right;
+    margin-top: 10px;
+}
+
+/* Select <footer> element in the class "main-container" and set padding, background color, border and font size. */
+
+.main-container footer {
+    clear: both;
+    padding: 20px 10px;
+    background-color: #eeeeee;
+    border-top: 1px solid #cccccc;
+    font-size: 13px;
+}
+
+/* Select the id "logo" and adjust size and font style.*/
+
+#logo {
+    width: 30%;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* Select the <img> element and adjust size and vertical alignment.  */
+
+#logo img {
+    width: 94px;
+    vertical-align: middle;
+}
+
+/*  Remove bullets*/
+
+nav ul {
+    list-style-type: none;
+}
+
+/* Set block level element, remove underline  and set padding.*/
+
+nav ul a {
+    display: block;
+    text-decoration: none;
+    padding: 5px;
+}
+
+/* Adjust dimensions for the class "province" in the <div> element. */
+
+div .province {
+    width: 30%;
+    float: left;
+    margin: 8px;
+    height: 310px;
+}
+
+/* Set scroll bar and adjust size for the class "description" */
+
+div .province .description {
+    max-height: 165px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 8px;
+}
+
+/* Select <a> elements in the class "province" and adjust size, color, text style. */
+
+div .province a {
+    display: block;
+    text-align: center;
+    background-color: #555555;
+    color: #eeeeee;
+    text-decoration: none;
+    padding: 5px;
+}
+
+/* Select the class "flag" in the <img> element and set width. */
+
+img .flag {
+    width: 100%;
+}

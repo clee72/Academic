@@ -1,0 +1,69 @@
+/* Place all of your CSS Code in this file */
+
+/********************************************************************************* 
+*
+* WEB222 – Assignment #4a
+*
+* I declare that this assignment is my own work in accordance with Seneca 
+* Academic Policy. No part of this assignment has been copied manually or 
+* electronically from any other source (including web sites) or distributed to 
+* other students. 
+* 
+* Name: _WONHWA LEE_ Student ID: _076086149_ Date: _2019/07/17_ 
+* 
+********************************************************************************/
+
+body {
+    color: darkgreen;
+}
+
+nav {
+    background-color: darkolivegreen;
+}
+
+footer {
+    background-color: darkolivegreen;
+}
+
+header {
+    text-shadow: 2px 1px darkgray;
+    word-spacing: 15px;
+}
+
+.app-title {
+    font-family: 'Butterfly Kids', cursive;
+    letter-spacing: 20px;
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+}
+
+.main-table-container {
+    background-color: #e9f0e7;
+    max-height: 70vh;
+    width: 960px;
+    overflow-y: scroll;
+}
+
+.main-table-top th {
+    background-color: #66363c;
+    border: 3px solid #ddd;
+    padding: 8px;
+    color: white;
+    font-family: monospace;
+}
+
+.main-table td {
+    border: 3px solid;
+    border-color: white;
+    color: #103304;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.main-table p span {
+    color: #cc6d79;
+    text-decoration: underline;
+    text-decoration-color: #103304;
+    text-decoration-style: dotted;
+}
+
