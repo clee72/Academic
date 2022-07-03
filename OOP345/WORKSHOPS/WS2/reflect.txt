@@ -1,0 +1,16 @@
+// Workshop 2
+//Date: 2019/09/21
+//Section:NBB
+//Name:WONHWA LEE
+//Student No.:076086149
+//Email:wlee72@myseneca.ca
+//at_home
+
+
+1. the reason for the significant time difference between the copy and move operation.
+
+Copy constructor and move assignment operator take lvalue reference as an argument.  Copy assignment operator replaces the contents of one existing object with a copy of the contents of another object. Copy assignment operator uses more memory space, as compared to the move assignment operator. As a result, it is slow, too.
+Therefore, copying is not the most efficient way to work.
+Since move assignment operator moves data from one object to another object. For instance, if there are two objects called "A" and  "B" and move operator moves ownership from object A  to B,  A may no longer hold on to the memory.  Therefore we set the object A to be an empty state. Because the rvalue is the temporary object, it will be destroyed soon anyway.
+
+From this workshop, I have a better understanding of move and copy operation, according to lvalue and rvalue. Especially, I understood when the move constructor and move operator are called.  These are called when we assign an object to function or rvalue, which will be a temporary object.  While I was doing this workshop, I had some difficulties with the file stream.  My problem was that I did not pass the file name(e.g., std::ifstream fin(fname);), when I created a tempory object (e.g., fin) of fstream. Instead, I declared an instance variable( e.g.,string fname;) in the class "Text".  After this workshop was done, I became more clear about file stream syntax.

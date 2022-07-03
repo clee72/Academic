@@ -1,0 +1,13 @@
+// Name:Wonhwa Lee	
+// Seneca Student ID:076086149
+// Seneca email:wlee72@myseneca.ca
+// Date of completion:November 16, 2019
+
+
+In this workshop, I have learned more about the difference between Raw pointer and  Smart pointer.  From the course note, I learned about "std::unitque_ptr<>" and "std::shared_ptr<>".  The unitque_ptr resides on the stack area since this pointer is statically allocated compared to an object. The object is dynamically allocated in the Heap area. The unique_ptr is only one pointer pointing to the object. Therefore, there is an exclusive ownership existing.  This means we cannot use a copy constructor or copy assignment operator, which causes compile errors because we want to free the object's memory space more than one time.  Especially,  we create an object by using "new" keyword only once, and if there are more one unique_ptr which goes out of scope, it automatically deallocates the object's memory more than one time. This causes the compile error. However, an object can be pointed by more than one shared_ptr<>; therefore, we can use a copy constructor and copy assignment operator.
+
+1. the advantage that smart pointer syntax provides. Use example from your code to support your explanation.
+  In our "mergeRaw()" and "mergeSmart()",  we use both smart and raw pointer. In the smart pointer, we do not need to use "delete tt;" statement because when the unique_ptr goes out of scope, it automatically destroys the object at the same time. Therefore, we do not need to worry about memory leak.
+
+2. the difference between raw and smart pointer syntax in your solution.
+The unique_ptr which is a class wraps our raw pointer in this workshop (e.g., std::unique_ptr<Product> tt (new Product(desc[i].desc, price[j].price));) Therefore, the lifetime unique_ptr and our object are the same because our raw pointer is in the smart pointer.

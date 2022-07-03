@@ -1,0 +1,25 @@
+// Workshop 5
+//Date: 2019/10/18
+//Section:NBB
+//Name:WONHWA LEE
+//Student No.:076086149
+//Email:wlee72@myseneca.ca
+//at_home
+
+In this workshop, I have learned more about the function pointer. In our workshop, there is the function called the "observer" which receives the address of the other functions. These function needs to have the same return type(e.g., void) and the same number of parameters and the same type of parameter as the function pointer. In the workshop, our "observer" pointer has the address of the functions(e.g.,)
+void bookAddedObserver(const Collection<Book>& theCollection,const Book& theBook),
+void movieAddedObserver(const Collection<Movie>& theCollection,const Movie& theMovie).
+Therefore, in our function(setObserver), we just need to set the address of the functions pointed to.
+
+1.the difference between the implementations/utilizations of a functor and a lambda expression. When is appropriate to use each one?
+
+The lambda expression is an anonymous function. If we want to use the function only once or a limited number of times, it is syntactically less heavy than using the function with a name(identifier). However, if we want to use this lambda function more than one or not certain amounted times, we have to rewrite this function over and over. In that case, it is better to use the function(functor) with a name.
+
+2.the constructor for SpellChecker generates an exception in certain conditions. How would you change your code to achieve the same result, but without exceptions (both on the constructor and on the client side)? Compare the two solutions.
+We can use the "if-else statement."  If you use "if(!file)",  we do not need to do any more steps in the main() since we cannot open the file.
+
+3.the classes Movie and Book contain almost identical logic in loading data from the file. How would you redesign the classes in order not to duplicate that logic?
+We can use inheritance by using the virtual function from the base class. We can redefine the function in the child class.
+
+4.the classes Movie and Book are instantiated from the main() function using a custom constructor, but they also contain a default constructor. Is the default constructor necessary? Could you remove it? Justify your answer.
+Actually,  we use the default constructor in the classes. The compiler creates the default constructor automatically for the shallow copy. Therefore, it is not necessary to create these constructors for this workshop.

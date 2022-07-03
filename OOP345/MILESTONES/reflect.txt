@@ -1,0 +1,11 @@
+//Final Project: MS 3
+// Name: Wonhwa Lee	
+// Seneca Student ID: 076086149
+// Seneca email: wlee72@myseneca.ca
+// Date of completion: November 29, 2019
+
+
+
+During this semester, I have a good opportunity to learn more about containers and algorithms. Especially, I have a better understanding of the "pointer." In this MS3, we use the "Assembly" vector container, which contains each Task object addresses. From this course, I realize that there is a lof of built_in functions of algorithms. It allows us to write simpler codes for example, if we want to write the "bubble sort" function, we need to loop through twice and swap each element depends on how we want to sort, however, if we use the "sort()" from the "algorithm" library,  we can do this with one line code.
+
+Overall, this course improves me a lot, and now I can think more logically by visualizing memory space when it comes to the "deallocation" and "pointer" part.

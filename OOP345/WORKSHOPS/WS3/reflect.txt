@@ -1,0 +1,19 @@
+
+// Workshop 3
+//Date: 2019/10/1
+//Section:NBB
+//Name:WONHWA LEE
+//Student No.:076086149
+//Email:wlee72@myseneca.ca
+//reflect
+
+In this workshop, I have learned how to create function templates, class templates, template specialization, and how to use class template inheritance. The most difficult part was to print out the output. It was hard to match the output until I  added the condition. My output's problem was the comma(,) start before the item list like  ", tomatoes, lettuce, potatoes, meat." Therefore, I had to put the condition. If there are empty strings, I do not put a comma(,). Only if there is something, I add a comma.
+
+1. The reason for specializing the sum() member function.
+In this workshop, the definition of this sum() function works with fundamental data types to add two receiving numbers. However, if we want to concatenate two strings of the receiving parameters, we should use template specialization.
+
+2.The reason for specializing the initial value for summation.
+By initializing the value with explicit specialization, we can set the value with either integer or string type in this workshop. Depends on the data type class template receives, the compiler would look for a specific template for initial value for summation.
+
+3.The reason for defining the class variable outside the class definition. 
+We define them outside the class because it is necessary to allocate memory space for them outside the class since we cannot allocate memory space inside the class. Especially the static variable in this workshop, we have to declare outside the class according to the "one definition rule" in C++.  The static variables are only initialized one time, and all the objects in the class share the same memory space. The constructor never initializes the static variables.

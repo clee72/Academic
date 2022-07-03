@@ -1,0 +1,21 @@
+Name: Wonhwa Lee
+Student Id:076086149
+Section: NBB
+Submission date: November 5, 2019
+
+In this workshop, I have difficulties in getting a character in the "Utilities.cpp". Since I used the "if-else" statement to set "tag" to create either Car or Racecar object depending on the first character, we grab it from the file stream.  Eventually, I changed my logic to switch-cast because I realized that switch-cast tests the value of a variable and compares it with multiple cases while the "if -else" statement is useful for boolean (condition).
+
+1. Why do you need to deallocate the dynamically allocated memory in your vector?
+
+I think we allocate memory dynamically in the vector container, for example, we are using the built-in function "m_vehicles.push_back(theVehicle);" Since the vector is a contiguous memory with the flexibility of size. In this workshop. We can add each "vehicle object" into the "m_vehicle" container. Therefore, we need to deallocate the memory before objects are out of scope to prevent a memory leak.
+
+2. When building an object from the input file, different things can go wrong: the record represents an unknown type of vehicle, or record contains invalid data. How can the function loadData() detect what went wrong?
+Can you think at another solution than the one you have implemented?
+
+In this workshop, we used "try-catch" because we want the certain data from the file, for example, we just need a character (C,c,R,r) to instantiate a car or racecar. Other than those characters, we trigger errors by using error exception by throwing the errors to our main() in this workshop. The main() handles those errors by using "try-catch."
+I think we can also use the "if-else" statement.
+
+
+3.In this workshop you had to use std::list<sdds::Vehicle*> and std::vector<sdds::Vehicle*> to store a collection of vehicles as pointers. Could you have used std::list<sdds::Vehicle> and std::vector<sdds::Vehicle> instead? Justify your answer!
+
+Yes, I think we can do that since we store "<Vehicle*>" type elements that hold the address of the our actual individual Vehicle object. If we use <Vehicle> instead of <Vehicle*>, we can directly access our Vehicle objects as elements of the container.

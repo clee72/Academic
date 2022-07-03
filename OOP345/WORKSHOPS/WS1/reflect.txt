@@ -1,0 +1,79 @@
+// Workshop 1
+//Reflection
+//Date: 2019/09/13
+//Section:NBB
+//Name:WONHWA LEE
+//Student No.:076086149
+//Email:wlee72@myseneca.ca
+//at_home
+
+the difference between internal and external linkage using examples from your code
+In this workshop, I declared "extern unsigned g_maxSize; in the header file and then I initialized this variable in the "String.cpp(unsigned g_maxSize=3;). The external linkage has the scope in this entire program; however, the internal linkage only has scope inside one translation unit, which is  "String module." Therefore the "extern" variable has only one memory space in the entire program. This memory space can be updated by accessing from other translation units, such as our "process" and "String" module of this workshop.
+
+According to the code example 1 below, the external linkage has scope for the entire program while the internal linkage has scope within one translation unit.
+ex1)External Linkage//the variable "count" has one memory space in the program.
+ // a.cpp
+ #include <iostream>
+ extern int count; // 
+ void display() {
+     std::cout <<  &count << std::endl; 
+     std::cout << count++ <<std::endl;;
+ }
+  // External Linkage
+ // b.cpp
+
+ #include <iostream>
+ void display();
+ int count = 0; 
+ int main() {
+     display();
+     display();
+    display();
+     std::cout << &count <<std::endl; //sharing the same memory space.
+     std::cout << count++ <<std::endl;
+ }
+//output 
+ 0x601194                                                                                                                     
+0                                                                                                                            
+0x601194                                                                                                                     
+1                                                                                                                            
+0x601194                                                                                                                     
+2                                                                                                                            
+0x601194  
+3
+0x601194  
+-------------------------------------------------------------------------
+ ex2) Internal Linkage  //2 different memory spaces created with the same variable name in one program.
+ // c.cpp
+ #include <iostream>
+
+ static int count2 = 0;
+ void display() {
+     std::cout <<  &count2<< std::endl; 
+     std::cout << count2++ << std::endl;
+ }
+
+ // d.cpp
+ #include <iostream>
+
+ void display();
+ static int count2= 5;//redefinition error
+
+/*We have an error here because we already define the "count2" variable as "static" in the "c.pp," but this line tries to create another memory space with the same variable name.*/
+
+ int main() {
+     display();
+     display();
+     std::cout << &count2 << std::endl; 
+     std::cout << count++ << std::endl;
+ }//ERROR!! error: redefinition of ‘int count2’
+
+2.what are static variables and how were they useful in this workshop.
+
+By using the static variable "counter" in this workshop, we can update the number of "counter" variable within one translation unit such as String module. The "static" variable, "counter",  is inside the "ostream& operator<<(ostream& os, String& str) ". Even though the "counter" variable is out of this local scope and this function called again, it does not create new memory space. The static variable "counter" is initialized one time and use the same memory space within this String module. Therefore, we can increase the "counter" variable whenever we call this function.
+
+3.the changes that you made in upgrading your String class.
+
+According to the home part instruction, we had to receive any C-style null-terminated strings with any length by changing the "char m_str[MAX+1];"  to "char* m_str;" to do the dynamic allocation. In this case, it is better to use dynamically allocated memory space because we cannot predict what size of strings we receive. The dynamic memory is allocated on the Heap. I also had to add an assignment operator(String& operator=(const String& str);)  into the String module to assign the existing object(str1) to another existing object(str3).
+
+4 From this workshop, I have a better understanding of the external and internal linkage how they are allocated in the memory. Especially, the external and internal linkage has a different scope. While the external linkage scope can be used throughout the entire program, the internal linkage is restricted to one translation unit. Therefore, the external linkage refers to an entity outside the "String"  module,  but the internal linkage refers to an entity inside the "String" module.

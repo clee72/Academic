@@ -1,0 +1,56 @@
+
+
+// Name:Wonhwa Lee
+// Seneca Student ID:076086149
+// Seneca email:wlee72@myseneca.ca
+// Date of completion:November 9, 2019
+
+In this workshop, I had a difficult time to figure out a couple of errors because of not enough size of the vector container. This problem was solved by using "count_if".  From this function, I could figure out 5 Song objects which meet the condition(a_song.m_artist=artist;). By setting the size of vector "songs" to 5 in this workshop, we can store the five-song objects which have the same name from "artist" passed in the parameter(e.g., "Sia").
+
+1.list all the STL functions that you have used in this workshop; explain your reasoning for choosing each one and not another.
+
+for_each(s.begin(), s.end(), [&out](const Song& s) {out << s << std::endl; }); 
+ -This function we can just get output of Song object "s" by looping all the elements in the container
+
+std::sort(s.begin(), s.end(), [](const Song& a, const Song& b) {return a.m_title.compare(b.m_title) < 0; });
+-This STL function sorts all element by using compare(). We can sort all elements in the container in  in either descending order or ascending order.
+
+        std::transform(s.begin(), s.end(), s.begin(), [](Song& song) {
+            Song tmp = song;
+            if (tmp.m_album == "[None]") {
+                tmp.m_album = " ";
+            }
+            return tmp; });
+-This function loops through all elements, and we can modify our original element. The returns from the lambda function in this workshop are stored in the same container "s". Therefore, we can replace our "[None]" with ""(space).
+
+auto res = std::find_if(s.begin(), s.end(), [&artist](const Song& t_song) {return artist == t_song.m_artist; });
+        return res != s.end();
+-We loop through all elements in the container, and it returns one element within the range of the container if the condition is true. Since the s.end() is out of the range.
+
+auto cnt = std::count_if(s.begin(), s.end(), [&artist](const Song& a_song) {return a_song.m_artist == artist; });
+-Since we need to know the size of the list container ("songs") to store informaton about "Sia". This function also loops through all elements in the container and count the number of a artist which  give us the size 5.
+
+std::copy_if(s.begin(), s.end(), songs.begin(), [&artist](const Song& t_song) {
+            return artist == t_song.m_artist;
+        });
+
+-This function stores a list of the Song object elements which meet the condition. From the previous function, we cant the size of the container.(e.g., "songs").
+
+2.present the advantages of using STL algorithms vs. implementing the functionality by yourself using loops.
+
+For example, if we want to do a bubble sorting, we need to write more code lines. By using STL built-in functions(e.g., sort(), sorting string or number) is much easier in this workshop.
+
+3.the function that sorts the collection of songs receives as a parameter the field name to use; this can create errors if the client specifies an invalid field (or misspells it). How would you redesign that function to prevent the client from specifying an invalid string, allowing any error to be detected by the compiler?
+
+By using exception, we could handle errors. If there are errors, we throw errors to "try-catch" block, which can handle those errors. In this workshop, we used"   (e.g., throw "an exception error occurred"). Using "try" which validates input data from the Users if there could be user input wrong. The "catch" catches any error message. It could be in the implementation file or main(), depending on where we handle errors.
+
+
+
+
+
+
+
+        
+
+
+
