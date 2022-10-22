@@ -4,7 +4,7 @@
 // Date of completion:October 08, 2019
 //
 // I confirm that the content of this file is created by me,
-//   with the exception of the parts provided to me by my professor
+// with the exception of the parts provided to me by my professor
 
 #include <iostream>
 #include <algorithm>
@@ -22,7 +22,7 @@ namespace sdds {
 	}
 	Reservation::Reservation(const std::string& m_res) {
 		m_id = m_res.substr(0, m_res.find(':'));
-		//move(), erase() returns the strings without ' '.
+		// move(), erase() returns the strings without ' '.
 		m_id.erase(remove(m_id.begin(), m_id.end(), ' '), m_id.end());
 
 		m_name = m_res.substr(m_res.find(':') + 1, m_res.find(',') - 1);
@@ -59,9 +59,7 @@ namespace sdds {
 		else if (r.m_hour >= 17 && r.m_hour <= 21) {
 			str_temp = "Dinner on day ";
 		}
-		/*	else {
-				str_temp = "Drinks on day ";
-			}*/
+	
 		else if ((r.m_hour >= 22 && r.m_hour <= 24) || (r.m_hour == 5) || (r.m_hour == 10) || (r.m_hour == 16)) {
 			str_temp = "Drinks on day ";
 		}
