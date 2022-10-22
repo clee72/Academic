@@ -1,4 +1,4 @@
-# AssemblyStation-Project (C++ Academic project: OOP345, Grade: A+)
+# Assembly Station Project (C++ Academic project: OOP345, Grade: A+)
 
 ## Milestone 1
 ### Utilities and Station classes
