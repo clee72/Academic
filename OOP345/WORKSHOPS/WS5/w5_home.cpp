@@ -2,12 +2,12 @@
 // 2019/10 - Cornel
 
 // Workshop 5
-//Date: 2019/10/18
-//Section:NBB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//at_home
+// Date: 2019/10/18
+// Section:NBB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// at_home
 
 #include <iostream>
 #include <iomanip>
@@ -25,7 +25,7 @@ using namespace std;
 using namespace sdds;
 
 // The observer function for adding books to the collection:
-//   should be called every time a new book is added to the collection
+// should be called every time a new book is added to the collection
 void bookAddedObserver(const Collection<Book>& theCollection,
 	const Book& theBook)
 {
@@ -33,7 +33,7 @@ void bookAddedObserver(const Collection<Book>& theCollection,
 }
 
 // The observer function for adding movies to the collection:
-//   should be called every time a new movie is added to the collection
+// should be called every time a new movie is added to the collection
 void movieAddedObserver(const Collection<Movie>& theCollection,
 	const Movie& theMovie)
 {
@@ -118,7 +118,7 @@ int main(int argc, char** argv)
 	std::cout << "-----------------------------------------\n\n";
 
 	// TODO (from in-lab): iterate over the library and update the price of each book
-	//         using the lambda defined above.
+	// using the lambda defined above.
 	for (size_t i = 0; i < library.size(); i++) {
 		priceUpdate(library[i]);
 	}
