@@ -4,7 +4,7 @@
 // Date of completion:October 04, 2019
 //
 // I confirm that the content of this file is created by me,
-//   with the exception of the parts provided to me by my professor
+// with the exception of the parts provided to me by my professor
 
 #pragma once
 #include <string>
