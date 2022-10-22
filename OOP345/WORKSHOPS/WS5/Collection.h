@@ -1,10 +1,10 @@
 // Workshop 5
-//Date: 2019/10/18
-//Section:NBB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//at_home
+// Date: 2019/10/18
+// Section:NBB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// at_home
 
 #pragma once
 
@@ -51,25 +51,25 @@ namespace sdds {
 					isFound = true;
 				}
 			}
-				//if title is not found, we add an item.
+		        // if title is not found, we add an item.
 			if (!isFound) {
 				T* tmp = nullptr;
-				tmp = new T[c_size + 1];//resize the array.
+				tmp = new T[c_size + 1];// resize the array.
 				for (size_t i = 0; i < c_size; i++) {
 					tmp[i] = arr[i];
 				}
-				tmp[c_size++] = item;//add item to the resized array
+				tmp[c_size++] = item;// add item to the resized array
 				if (observer) {
-					observer(*this, item);//call the observer function,
-										  // which has a void return type and two arguments (const Collection<T>& a, const T& b)
-				
+					// call the observer function,
+					// which has a void return type and two arguments (const Collection<T>& a, const T& b)
+					observer(*this, item);
 				}
 				delete[] arr;
 				arr = tmp;
 			}
 			return *this;
 		}
-		//return the item of the idx position.
+		// return the item of the idx position.
 		T& operator[](size_t idx) const {
 			if (idx < 0 || idx >= c_size) {
 				throw out_of_range("Bad index [" + std::to_string(idx) +
@@ -82,7 +82,8 @@ namespace sdds {
 			if (title != "") {
 				for (size_t i = 0; i < c_size; i++) {
 					if (arr[i].title() == title) {
-						result = &arr[i];//if the item exists, this function returns the item's address
+						// if the item exists, this function returns the item's address
+						result = &arr[i];
 					}
 				}
 			}
