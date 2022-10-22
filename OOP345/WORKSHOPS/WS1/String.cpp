@@ -1,14 +1,14 @@
 
 // Workshop 1
-//Date: 2019/09/14
-//Section:NBB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//at_home
+// Date: 2019/09/14
+// Section:NBB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// at_home
 
 // I confirm that the content of this file is created by me,
-//   with the exception of the parts provided to me by my professor.
+// with the exception of the parts provided to me by my professor.
 
 
 #include <iostream>
@@ -24,7 +24,7 @@ namespace sdds {
 	String::String(const char* str) {
 		if (str != nullptr) {
 			m_str = nullptr;
-			m_str = new char[strlen(str) + 1];//dynamic allocation
+			m_str = new char[strlen(str) + 1];// dynamic allocation
 			strncpy(m_str, str, strlen(str));
 			m_str[strlen(str)] = '\0';
 		}
@@ -35,12 +35,12 @@ namespace sdds {
 	}
 
 	String& String::operator=(const String& str) {
-		if (this != &str) {//check if str is the same address as the current object
+		if (this != &str) {// check if str is the same address as the current object
 			delete[] m_str;
 			m_str = nullptr;
 			if (str.m_str != nullptr) {
-				m_str = new char[g_maxSize];//dynamic allocation
-				strncpy(m_str, str.m_str, g_maxSize);//copy strings
+				m_str = new char[g_maxSize];// dynamic allocation
+				strncpy(m_str, str.m_str, g_maxSize);// copy strings
 				m_str[g_maxSize] = 0;
 			}
 		}
@@ -53,7 +53,7 @@ namespace sdds {
 
 	void String::display(std::ostream& os) const {
 		unsigned size = strlen(m_str);
-		if (size < g_maxSize && m_str != nullptr) {//print strings depends on the size.
+		if (size < g_maxSize && m_str != nullptr) {// print strings depends on the size.
 			os << m_str;
 		}
 		else {
@@ -64,7 +64,7 @@ namespace sdds {
 	}
 
 	ostream& operator<<(ostream& os, String& str) {
-		static int counter = 1;//counter variable has one memory space in this translation unit
+		static int counter = 1;// counter variable has one memory space in this translation unit
 		os << counter++ << ": ";
 		str.display(os);
 		return os;
