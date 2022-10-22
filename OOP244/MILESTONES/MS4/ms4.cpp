@@ -9,12 +9,12 @@
 //
 // Revision History
 // -----------------------------------------------------------
-//Date: 2019/08/03
-//Section:SAB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//ms4
+// Date: 2019/08/03
+// Section:SAB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// ms4
 /////////////////////////////////////////////////////////////////
 
 #include <iostream>
