@@ -1,13 +1,13 @@
 // Workshop 2
-//Date: 2019/09/21
-//Section:NBB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//at_home
+// Date: 2019/09/21
+// Section:NBB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// at_home
 
 // I confirm that the content of this file is created by me,
-//   with the exception of the parts provided to me by my professor.
+// with the exception of the parts provided to me by my professor.
 
 #include <iomanip>
 #include "TimedEvents.h"
