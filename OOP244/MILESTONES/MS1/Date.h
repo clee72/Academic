@@ -1,10 +1,10 @@
-//Date.h
-//Date: 2019/07/11
-//Section:SAB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//ms1
+// Date.h
+// Date: 2019/07/11
+// Section:SAB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// ms1
 
 #pragma once
 #ifndef AID_DATE_H
