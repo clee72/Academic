@@ -1,10 +1,10 @@
-//Error.cpp
-//Date: 2019/07/30
-//Section:SAB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//ms2
+// Error.cpp
+// Date: 2019/07/30
+// Section:SAB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// ms2
 
 #pragma warning(disable : 4996)
 #include<iostream>
