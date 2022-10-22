@@ -1,10 +1,10 @@
 // Workshop 3
-//Date: 2019/10/1
-//Section:NBB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//at_home
+// Date: 2019/10/1
+// Section:NBB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// at_home
 
 #pragma once
 #include <iostream>
@@ -39,7 +39,7 @@ namespace sdds {
 			
 			for (size_t i = 0; i < ((List<T, N>&)*this).size(); i++) {
 		// It checks two keys matched by comparing the receving object label and the List object's label. 
-		//If they are matched, we append the item into the "m_sumVal.
+		// If they are matched, we append the item into the "m_sumVal.
 				if (label == ((List<T, N>&)*this)[i].key()) {
 					m_sumVal = ((List<T, N>&)*this)[i].sum(label, m_sumVal);
 				}
