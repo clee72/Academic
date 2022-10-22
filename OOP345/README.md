@@ -1,4 +1,4 @@
-# OOP 345 (C++ Programming 2)
+# OOP 345 (C++ Programming 2, Grade: A+)
 - Design collections of model objects using sequential containers and multi-dimensional arrays to solve a systems or business problem
 - Create function objects and closures to customize a programming solution for a particular application
 - Model generalization and specialization using inheritance hierarchies to minimize the duplication of code
