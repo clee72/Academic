@@ -7,13 +7,13 @@ Milestone 1 implements and tests the `Utilities` and `Station` modules.
 The `Utilities` module supports the parsing of input files, which contain information used to setup and configure the assembly line.
 The `Station` module manages information about a station on the assembly line, which holds a specific item and fills customer orders.
 
-### Milestone 2
+## Milestone 2
 Milestone 2 implements and tests the `CustomerOrder` module.
 
 The `CustomerOrder` module contains all the functionality for processing customer orders as they move from `Station` to `Station` along
 the assembly line. The `Station` where a given order currently rests fills a request for one item of that station, if there is any such request.
 
-### Milestone 3
+## Milestone 3
 Milestone 3 implements and tests the `Workstation` and `LineManager` modules.
 
 The `LineManager` module first configures the assembly line and then moves `CustomerOrders` along it (from start to finish). The `LineManager` object
