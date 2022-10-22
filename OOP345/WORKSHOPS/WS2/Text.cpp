@@ -1,14 +1,14 @@
 
 // Workshop 2
-//Date: 2019/09/21
-//Section:NBB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//at_home
+// Date: 2019/09/21
+// Section:NBB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// at_home
 
 // I confirm that the content of this file is created by me,
-//   with the exception of the parts provided to me by my professor.
+// with the exception of the parts provided to me by my professor.
 
 #include <iostream>
 #include "Text.h"
@@ -19,7 +19,7 @@ namespace sdds {
 
 	Text::Text() :m_str{ nullptr }, str_num{ 0 } {}
 
-	//file stream: read strings from the file
+	// file stream: read strings from the file
 	Text::Text(const std::string& fname) {
 		std::ifstream fin(fname);
 		str_num = 0;
@@ -39,15 +39,15 @@ namespace sdds {
 		}
 	}
 
-	//copy constructor
+	// copy constructor
 	Text::Text(const Text& t) {
 		*this = t;
 	}
 
-	//move constructor
+	// move constructor
 	Text::Text(Text&& m) { *this = std::move(m); }
 
-	//copy assignment operator
+	// copy assignment operator
 	Text& Text::operator=(const Text& t) {
 		if (this != &t) {
 			str_num = t.str_num;
@@ -63,17 +63,17 @@ namespace sdds {
 		}
 		return *this;
 	}
-	//move assingment operator
+	// move assingment operator
 	Text& Text::operator=(Text&& m) {
 		if (this != &m) {
 			m_str = m.m_str;
 			str_num = m.str_num;
-			m.m_str = nullptr;//set to empty state
+			m.m_str = nullptr;// set to empty state
 			m.str_num = 0;
 		}
 		return *this;
 	}
-	//destructor
+	// destructor
 	Text::~Text() {
 		delete[] m_str;
 		m_str = nullptr;
