@@ -1,10 +1,10 @@
 // Workshop 2
-//Date: 2019/09/21
-//Section:NBB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//at_home
+// Date: 2019/09/21
+// Section:NBB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// at_home
 
 
 1. the reason for the significant time difference between the copy and move operation.
