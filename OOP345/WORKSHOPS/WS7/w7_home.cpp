@@ -67,7 +67,7 @@ int main(int argc, char** argv)
 			for (auto& song : sia)
 			{
 				std::cout << song << "\n";
-			//	song.m_price += 10;
+			// song.m_price += 10;
 			}
 			printbar();
 		}
