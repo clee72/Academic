@@ -1,10 +1,10 @@
-//Perishable.cpp
-//Date: 2019/08/04
-//Section:SAB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//ms5
+// Perishable.cpp
+// Date: 2019/08/04
+// Section:SAB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// ms5
 
 #include <iostream>
 #include<fstream>
