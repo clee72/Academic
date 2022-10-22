@@ -1,11 +1,11 @@
-//Final Project: MS3
+// Final Project: MS3
 // Name: Wonhwa Lee	
 // Seneca Student ID: 076086149
 // Seneca email: wlee72@myseneca.ca
 // Date of completion: November 29, 2019
-//
+
 // I confirm that I am the only author of this file
-//   and the content was created entirely by me.
+// and the content was created entirely by me.
 
 #include<iostream>
 #include<vector>
@@ -23,13 +23,13 @@ LineManager::LineManager(const std::string& filename, std::vector<Task*>& task, 
 	Utilities util;
 	string item;
 
-	//move all the CustomerOrder 
+	// move all the CustomerOrder 
 	for (size_t i = 0; i < custOrderToBeFilled.size(); i++) {
 		ToBeFilled.push_front(move(custOrderToBeFilled[i]));
 		m_cntCustomerOrder++;
 	}
 
-	//copy all the Task
+	// copy all the Task
 		AssemblyLine = task;
 		
 
@@ -63,8 +63,8 @@ LineManager::LineManager(const std::string& filename, std::vector<Task*>& task, 
 bool LineManager::run(std::ostream& os) {
 	bool filled = false;
 	CustomerOrder custOrder;
-	//each element contains an address of a Task object.(e.g.,vector<Task*> t).
-	//Therefore, we need to dereference to "AssemblyLine" to access "Task" object.
+	// each element contains an address of a Task object.(e.g.,vector<Task*> t).
+	// Therefore, we need to dereference to "AssemblyLine" to access "Task" object.
 	if (!ToBeFilled.empty()) {
 		*(AssemblyLine[4]) += move(ToBeFilled.back());
 		ToBeFilled.pop_back();
