@@ -1,11 +1,11 @@
 
 // Workshop 3
-//Date: 2019/10/1
-//Section:NBB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//reflect
+// Date: 2019/10/1
+// Section:NBB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// reflect
 
 In this workshop, I have learned how to create function templates, class templates, template specialization, and how to use class template inheritance. The most difficult part was to print out the output. It was hard to match the output until I  added the condition. My output's problem was the comma(,) start before the item list like  ", tomatoes, lettuce, potatoes, meat." Therefore, I had to put the condition. If there are empty strings, I do not put a comma(,). Only if there is something, I add a comma.
 
