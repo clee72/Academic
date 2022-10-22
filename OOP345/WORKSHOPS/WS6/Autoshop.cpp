@@ -4,7 +4,7 @@
 // Date of completion:November 5, 2019
 //
 // I confirm that the content of this file is created by me,
-//   with the exception of the parts provided to me by my professor.
+// with the exception of the parts provided to me by my professor.
 
 #include "Autoshop.h"
 
@@ -20,7 +20,6 @@ namespace sdds {
 
 		std::vector<Vehicle*>::const_iterator it;
 		for (it = m_vehicles.begin(); it != m_vehicles.end(); ++it) {
-			//(*it)->display(out);
 			(*(*it)).display(out);
 			out << std::endl;
 		}
