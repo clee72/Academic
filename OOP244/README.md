@@ -1,4 +1,4 @@
-# OOP 244 (C++ Programming, Grade: A+)
+# OOP 244 (C++ Academic project: OOP244, Grade: A+)
 - Design classes with dynamically allocated resources to model the components of a programming solution
 - Design member functions using logic constructs to solve tasks of linear complexity
 - Relate classes using inheritance hierarchies to minimize the duplication of object code
