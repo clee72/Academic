@@ -1,10 +1,10 @@
-//Error.h
-//Date: 2019/08/04
-//Section:SAB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//ms5
+// Error.h
+// Date: 2019/08/04
+// Section:SAB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// ms5
 
 #ifndef AID_ERROR_H
 #define AID_ERROR_H
