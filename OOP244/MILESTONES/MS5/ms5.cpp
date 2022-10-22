@@ -10,12 +10,12 @@
 // Revision History
 // -----------------------------------------------------------
 
-//Date: 2019/08/04
-//Section:SAB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//ms5
+// Date: 2019/08/04
+// Section:SAB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// ms5
 /////////////////////////////////////////////////////////////////
 
 #include "iGood.h"
@@ -289,7 +289,6 @@ void dumpFile(const char* fname){
 }
 
 // pause_ pauses execution until user presses Enter
-//
 void pause_(){
   cout << "Press enter to continue ... ";
   cin.ignore(1000, '\n');
