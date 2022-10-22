@@ -1,10 +1,10 @@
 // Workshop 5
-//Date: 2019/10/18
-//Section:NBB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//at_home
+// Date: 2019/10/18
+// Section:NBB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// at_home
 
 In this workshop, I have learned more about the function pointer. In our workshop, there is the function called the "observer" which receives the address of the other functions. These function needs to have the same return type(e.g., void) and the same number of parameters and the same type of parameter as the function pointer. In the workshop, our "observer" pointer has the address of the functions(e.g.,)
 void bookAddedObserver(const Collection<Book>& theCollection,const Book& theBook),
