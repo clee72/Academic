@@ -1,10 +1,10 @@
 // Workshop 3
-//Date: 2019/10/1
-//Section:NBB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//at_home
+// Date: 2019/10/1
+// Section:NBB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// at_home
 
 #pragma once
 #include <iostream>
