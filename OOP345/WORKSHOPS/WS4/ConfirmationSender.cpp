@@ -4,7 +4,7 @@
 // Date of completion:October 08, 2019
 //
 // I confirm that the content of this file is created by me,
-//   with the exception of the parts provided to me by my professor
+// with the exception of the parts provided to me by my professor
 
 
 #include <iostream>
@@ -31,7 +31,7 @@ namespace sdds {
 	ConfirmationSender::~ConfirmationSender() {
 		delete[] c_reserv;
 	}
-	//move constructor
+	// move constructor
 	ConfirmationSender::ConfirmationSender(ConfirmationSender&& con) {
 		c_cnt = con.c_cnt;
 		c_reserv = con.c_reserv;
@@ -44,7 +44,7 @@ namespace sdds {
 			if (c_reserv[i] == &res) {
 				found = false;
 			}
-		}//resize the array
+		}// resize the array
 		if (found) {
 			Reservation** temp = new Reservation*[c_cnt + 1];
 			for (size_t i = 0; i < c_cnt; i++) {
