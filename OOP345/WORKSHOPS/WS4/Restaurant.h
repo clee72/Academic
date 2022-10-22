@@ -4,7 +4,7 @@
 // Date of completion:October 8, 2019
 //
 // I confirm that the content of this file is created by me,
-//   with the exception of the parts provided to me by my professor
+// with the exception of the parts provided to me by my professor
 
 
 #pragma once
@@ -27,17 +27,5 @@ namespace sdds {
 		size_t size() const;
 		friend ostream& operator<<(ostream & os, const Restaurant& rest);
 	};
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
