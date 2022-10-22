@@ -13,11 +13,11 @@ using namespace std;
 namespace sdds {
 	Restaurant::Restaurant() {}
 	Restaurant::Restaurant(Reservation* reservations[], size_t cnt) {
-		//dynamic allocation for the number of reservation
+		// dynamic allocation for the number of reservation
 		m_numReser = cnt;
 		m_reserv = new Reservation[m_numReser];
 		for (size_t i = 0; i < m_numReser; i++) {
-			//assign reservation information to the current object by dereferencing the pointer(array elements)
+			// assign reservation information to the current object by dereferencing the pointer(array elements)
 			m_reserv[i] = *reservations[i];
 		}
 	}
@@ -51,7 +51,7 @@ namespace sdds {
 	Restaurant::Restaurant(Restaurant && rest) {
 		*this = move(rest);
 	}
-	//move operator:transferring temporary object to the existing object
+	// move operator:transferring temporary object to the existing object
 	Restaurant& Restaurant::operator=(Restaurant && rest) {
 		if (this != &rest) {
 			m_numReser = rest.m_numReser;
