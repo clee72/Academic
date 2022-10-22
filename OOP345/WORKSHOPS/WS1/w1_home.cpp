@@ -10,7 +10,7 @@
 using namespace sdds;
 
 // TODO: write the prototype for the main function
-//         to accept command line arguments
+//       to accept command line arguments
 int main(int argc, char* argv[])
 {
 	std::cout << "Command Line:\n";
