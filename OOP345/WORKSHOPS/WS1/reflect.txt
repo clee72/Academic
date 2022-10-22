@@ -1,11 +1,11 @@
 // Workshop 1
-//Reflection
-//Date: 2019/09/13
-//Section:NBB
-//Name:WONHWA LEE
-//Student No.:076086149
-//Email:wlee72@myseneca.ca
-//at_home
+// Reflection
+// Date: 2019/09/13
+// Section:NBB
+// Name:WONHWA LEE
+// Student No.:076086149
+// Email:wlee72@myseneca.ca
+// at_home
 
 the difference between internal and external linkage using examples from your code
 In this workshop, I declared "extern unsigned g_maxSize; in the header file and then I initialized this variable in the "String.cpp(unsigned g_maxSize=3;). The external linkage has the scope in this entire program; however, the internal linkage only has scope inside one translation unit, which is  "String module." Therefore the "extern" variable has only one memory space in the entire program. This memory space can be updated by accessing from other translation units, such as our "process" and "String" module of this workshop.
@@ -19,7 +19,7 @@ ex1)External Linkage//the variable "count" has one memory space in the program.
      std::cout <<  &count << std::endl; 
      std::cout << count++ <<std::endl;;
  }
-  // External Linkage
+ // External Linkage
  // b.cpp
 
  #include <iostream>
@@ -32,7 +32,7 @@ ex1)External Linkage//the variable "count" has one memory space in the program.
      std::cout << &count <<std::endl; //sharing the same memory space.
      std::cout << count++ <<std::endl;
  }
-//output 
+ //output 
  0x601194                                                                                                                     
 0                                                                                                                            
 0x601194                                                                                                                     
@@ -43,7 +43,7 @@ ex1)External Linkage//the variable "count" has one memory space in the program.
 3
 0x601194  
 -------------------------------------------------------------------------
- ex2) Internal Linkage  //2 different memory spaces created with the same variable name in one program.
+ ex2) Internal Linkage  // 2 different memory spaces created with the same variable name in one program.
  // c.cpp
  #include <iostream>
 
@@ -66,7 +66,7 @@ ex1)External Linkage//the variable "count" has one memory space in the program.
      display();
      std::cout << &count2 << std::endl; 
      std::cout << count++ << std::endl;
- }//ERROR!! error: redefinition of ‘int count2’
+ }//ERROR!! error: redefinition of â€˜int count2â€™
 
 2.what are static variables and how were they useful in this workshop.
 
