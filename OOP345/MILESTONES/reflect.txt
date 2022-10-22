@@ -1,4 +1,4 @@
-//Final Project: MS 3
+// Final Project: MS 3
 // Name: Wonhwa Lee	
 // Seneca Student ID: 076086149
 // Seneca email: wlee72@myseneca.ca
